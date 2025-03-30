@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Logs Discord</title>
+  <style>
+    body { font-family: Arial; }
+    .log { margin: 5px; padding: 10px; background: #f0f0f0; }
+  </style>
+</head>
+<body>
+  <h1>Logs du Bot Discord</h1>
+  <div id="logs"></div>
+
+  <script>
+    async function refreshLogs() {
+      const response = await fetch('/api/logs');
+      const logs = await response.json();
+      
+      document.getElementById('logs').innerHTML = logs
+        .map(log => `
+          <div class="log">
+            [${new Date(log.timestamp).toLocaleString()}] ${log.message}
+          </div>
+        `)
+        .join('');
+    }
+
+    // Rafraîchir toutes les 2 secondes
+    setInterval(refreshLogs, 2000);
+    refreshLogs();
+  </script>
+</body>
+</html>
