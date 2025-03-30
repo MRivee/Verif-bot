@@ -1,0 +1,12 @@
+{
+  "discord": {
+    "token": "MTM1NTg2OTg1MDExOTE4MDM2OQ.GRn2BE.PAVw182K-lKNwFZCkzE55ybixozs_bT0BIJZeg",
+    "verificationChannel": "1355871337348075624",
+    "logsChannel": "1355872034969620603",
+    "verifiedRole": "1355871186734682132"
+  },
+  "server": {
+    "port": 3000,
+    "password": "Admin2504"
+  }
+}
