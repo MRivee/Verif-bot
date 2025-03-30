@@ -4,36 +4,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Discord-like Bot Control</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
             background-color: #2f3136;
             color: white;
-        }
-
-        #app {
             display: flex;
             height: 100vh;
         }
 
+        /* Sidebar */
         #sidebar {
-            width: 250px;
+            width: 80px;
             background-color: #23272a;
-            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
         }
 
-        #sidebar h2 {
-            color: #7289da;
+        #sidebar .server-icon {
+            background-color: #5865f2;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+            color: white;
+            cursor: pointer;
         }
 
+        #sidebar .server-icon:hover {
+            background-color: #4752c4;
+        }
+
+        /* Server list */
+        #server-list {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #server-list .server {
+            cursor: pointer;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        #server-list .server:hover {
+            background-color: #3e454d;
+            border-radius: 50%;
+        }
+
+        /* Main content (chat and control) */
         #main {
             flex: 1;
             display: flex;
             flex-direction: column;
         }
 
+        /* Header */
+        #header {
+            background-color: #202225;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+        }
+
+        #header h3 {
+            margin: 0;
+        }
+
+        /* Chat area */
         #chat-box {
             flex: 1;
             background-color: #2f3136;
@@ -52,10 +101,15 @@
             background-color: #5865f2;
         }
 
+        .message.user {
+            background-color: #43b581;
+        }
+
+        /* Command input */
         #command-input {
-            display: flex;
             background-color: #36393f;
             padding: 10px;
+            display: flex;
             align-items: center;
         }
 
@@ -81,49 +135,50 @@
         #command-input button:hover {
             background-color: #5e6db3;
         }
-        
-        .btn-control {
-            background-color: #43b581;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            margin: 10px 0;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        .btn-control:hover {
-            background-color: #3c9e6d;
-        }
     </style>
 </head>
 <body>
-    <div id="app">
-        <!-- Sidebar -->
-        <div id="sidebar">
-            <h2>Bot Control Panel</h2>
-            <button class="btn-control" onclick="sendCommand('start')">Start Bot</button>
-            <button class="btn-control" onclick="sendCommand('stop')">Stop Bot</button>
-            <button class="btn-control" onclick="sendCommand('restart')">Restart Bot</button>
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <div class="server-icon">
+            <i class="fas fa-plus"></i>
         </div>
-
-        <!-- Main Content -->
-        <div id="main">
-            <div id="chat-box">
-                <div class="message bot">
-                    <strong>Bot:</strong> Hello, I am your bot. Ready for commands!
-                </div>
+        <div id="server-list">
+            <div class="server" onclick="changeChannel('Bot Control')">
+                <i class="fas fa-cogs"></i>
             </div>
-            <div id="command-input">
-                <input type="text" id="command" placeholder="Enter bot command...">
-                <button onclick="sendMessage()">Send Command</button>
+            <div class="server" onclick="changeChannel('General')">
+                <i class="fas fa-comments"></i>
+            </div>
+            <div class="server" onclick="changeChannel('Help')">
+                <i class="fas fa-question-circle"></i>
             </div>
         </div>
     </div>
 
+    <!-- Main content -->
+    <div id="main">
+        <!-- Header -->
+        <div id="header">
+            <h3>Bot Control - General</h3>
+            <button onclick="sendCommand('Start Bot')" style="background-color: #43b581; padding: 10px; border-radius: 5px; color: white;">Start Bot</button>
+        </div>
+
+        <!-- Chat area -->
+        <div id="chat-box">
+            <div class="message bot">
+                <strong>Bot:</strong> Hello, I am your bot. Ready for commands!
+            </div>
+        </div>
+
+        <!-- Command input -->
+        <div id="command-input">
+            <input type="text" id="command" placeholder="Enter bot command...">
+            <button onclick="sendMessage()">Send Command</button>
+        </div>
+    </div>
+
     <script>
-        // Function to simulate sending a bot command
         function sendMessage() {
             const commandInput = document.getElementById('command');
             const command = commandInput.value.trim();
@@ -134,25 +189,33 @@
             }
         }
 
-        // Function to simulate sending a command to the bot
         function sendCommand(command) {
-            // Simulate a bot response
             setTimeout(() => {
                 addMessage('Bot', `Command '${command}' received!`);
             }, 1000);
         }
 
-        // Function to add messages to the chat
         function addMessage(sender, message) {
             const chatBox = document.getElementById('chat-box');
             const messageDiv = document.createElement('div');
             messageDiv.classList.add('message');
             if (sender === 'Bot') {
                 messageDiv.classList.add('bot');
+            } else {
+                messageDiv.classList.add('user');
             }
             messageDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
             chatBox.appendChild(messageDiv);
             chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
+        }
+
+        function changeChannel(channelName) {
+            const header = document.getElementById('header');
+            header.innerHTML = `<h3>Bot Control - ${channelName}</h3><button onclick="sendCommand('Start Bot')" style="background-color: #43b581; padding: 10px; border-radius: 5px; color: white;">Start Bot</button>`;
+            // Optionally, clear chat when changing channel
+            const chatBox = document.getElementById('chat-box');
+            chatBox.innerHTML = '';
+            addMessage('Bot', `Switched to ${channelName} channel!`);
         }
     </script>
 </body>
