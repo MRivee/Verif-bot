@@ -1,62 +1,69 @@
-const { Client, IntentsBitField } = require('discord.js');
-const axios = require('axios');
+const { Client, GatewayIntentBits } = require('discord.js');
 const db = require('@replit/database');
 
 const client = new Client({
   intents: [
-    IntentsBitField.Flags.Guilds,
-    IntentsBitField.Flags.GuildMessages,
-    IntentsBitField.Flags.GuildMembers
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildMembers
   ]
 });
 
 const logs = [];
 
+// Initialisation
 client.on('ready', () => {
-  logs.push({
-    timestamp: new Date(),
-    message: 'Bot Discord connecté'
-  });
+  addLog('Bot Discord connecté avec succès');
 });
 
+// Gestion des messages
 client.on('messageCreate', async message => {
   if (message.content === '!verify') {
-    logs.push({
-      timestamp: new Date(),
-      message: `Nouvelle demande de vérification de ${message.author.tag}`
-    });
-    
-    // Logique de vérification...
+    await handleVerification(message);
   }
 });
 
-exports.handler = async (event, context) => {
-  const { action } = event.queryStringParameters || {};
+async function handleVerification(message) {
+  addLog(`Début vérification pour ${message.author.tag}`);
   
+  // Logique de vérification...
+  try {
+    await message.reply('Vérification en cours...');
+    addLog(`Vérification envoyée à ${message.author.tag}`);
+  } catch (error) {
+    addLog(`ERREUR: ${error.message}`, true);
+  }
+}
+
+function addLog(message, isError = false) {
+  const logEntry = {
+    timestamp: new Date().toISOString(),
+    message,
+    type: isError ? 'error' : 'info'
+  };
+  logs.push(logEntry);
+  console.log(logEntry); // Pour les logs Netlify
+}
+
+// Gestion des requêtes Netlify
+exports.handler = async (event) => {
+  const { action } = event.queryStringParameters || {};
+
   if (action === 'logs') {
     return {
       statusCode: 200,
-      headers: {
-        'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive'
-      },
-      body: JSON.stringify(logs[logs.length - 1])
+      headers: { 'Content-Type': 'text/event-stream' },
+      body: JSON.stringify(logs.slice(-10)) // Retourne les 10 derniers logs
     };
   }
-  
-  if (action === 'getLogs') {
-    return {
-      statusCode: 200,
-      body: JSON.stringify(logs)
-    };
-  }
-  
+
   return {
     statusCode: 200,
-    body: JSON.stringify({ status: 'running' })
+    body: JSON.stringify({ status: 'active', logs: logs.length })
   };
 };
 
-// Ne pas oublier de connecter le client
-client.login(process.env.DISCORD_TOKEN);
+// Connexion Discord (seulement en production)
+if (process.env.NETLIFY) {
+  client.login(process.env.DISCORD_TOKEN);
+}
