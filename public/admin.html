@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Console Admin</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .debug-console {
+            background-color: #1e1e1e;
+            color: #f8f8f8;
+            font-family: monospace;
+            padding: 20px;
+            height: 80vh;
+            overflow-y: auto;
+        }
+        .log-entry {
+            margin-bottom: 10px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
+        .log-time {
+            color: #569cd6;
+        }
+        .log-message {
+            color: #dcdcaa;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-header">
+        <h1>Console de Vérification Discord</h1>
+    </div>
+    
+    <div class="debug-console" id="debugConsole">
+        <!-- Les logs apparaîtront ici -->
+    </div>
+    
+    <div class="admin-controls">
+        <button id="refreshLogs">Actualiser</button>
+        <button id="clearLogs">Effacer</button>
+    </div>
+
+    <script>
+        // Connexion à EventSource pour les logs en temps réel
+        const eventSource = new EventSource('/.netlify/functions/verify?action=logs');
+        
+        eventSource.onmessage = function(event) {
+            const logData = JSON.parse(event.data);
+            addLogEntry(logData);
+        };
+        
+        function addLogEntry(log) {
+            const consoleElement = document.getElementById('debugConsole');
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            logEntry.innerHTML = `
+                <span class="log-time">[${new Date(log.timestamp).toLocaleTimeString()}]</span>
+                <span class="log-message">${log.message}</span>
+            `;
+            consoleElement.appendChild(logEntry);
+            consoleElement.scrollTop = consoleElement.scrollHeight;
+        }
+        
+        document.getElementById('refreshLogs').addEventListener('click', fetchLogs);
+        document.getElementById('clearLogs').addEventListener('click', () => {
+            document.getElementById('debugConsole').innerHTML = '';
+        });
+        
+        async function fetchLogs() {
+            const response = await fetch('/.netlify/functions/verify?action=getLogs');
+            const logs = await response.json();
+            
+            const consoleElement = document.getElementById('debugConsole');
+            consoleElement.innerHTML = '';
+            
+            logs.forEach(log => {
+                addLogEntry(log);
+            });
+        }
+        
+        // Charger les logs initiaux
+        fetchLogs();
+    </script>
+</body>
+</html>
