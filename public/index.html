@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logs du Bot Discord</title>
+</head>
+<body>
+    <h1>Logs du Bot Discord</h1>
+    <div id="logs">
+        <!-- Les logs seront affichés ici -->
+    </div>
+    <script>
+        // Récupère les logs depuis l'API de ton serveur
+        fetch('/logs')
+            .then(response => response.json())
+            .then(data => {
+                const logsDiv = document.getElementById('logs');
+                data.forEach(log => {
+                    const logElement = document.createElement('div');
+                    logElement.innerHTML = `
+                        <p><strong>${log.timestamp}</strong></p>
+                        <p>Utilisateur: ${log.utilisateur}</p>
+                        <p>Serveur: ${log.serveur}</p>
+                        <p>Question: ${log.question}</p>
+                        <p>Réponse: ${log.reponse}</p>
+                        <p>Correct: ${log.correct}</p>
+                        <p>Rôle: ${log.role}</p>
+                        <hr>
+                    `;
+                    logsDiv.appendChild(logElement);
+                });
+            })
+            .catch(err => console.error("Erreur lors de la récupération des logs:", err));
+    </script>
+</body>
+</html>
