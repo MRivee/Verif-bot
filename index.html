@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord-like Bot Control</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #2f3136;
+            color: white;
+        }
+
+        #app {
+            display: flex;
+            height: 100vh;
+        }
+
+        #sidebar {
+            width: 250px;
+            background-color: #23272a;
+            padding: 20px;
+        }
+
+        #sidebar h2 {
+            color: #7289da;
+        }
+
+        #main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #chat-box {
+            flex: 1;
+            background-color: #2f3136;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .message {
+            background-color: #36393f;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+
+        .message.bot {
+            background-color: #5865f2;
+        }
+
+        #command-input {
+            display: flex;
+            background-color: #36393f;
+            padding: 10px;
+            align-items: center;
+        }
+
+        #command-input input {
+            flex: 1;
+            background-color: #4f545c;
+            border: none;
+            padding: 10px;
+            color: white;
+            border-radius: 5px;
+        }
+
+        #command-input button {
+            background-color: #7289da;
+            color: white;
+            padding: 10px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #command-input button:hover {
+            background-color: #5e6db3;
+        }
+        
+        .btn-control {
+            background-color: #43b581;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin: 10px 0;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-control:hover {
+            background-color: #3c9e6d;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Sidebar -->
+        <div id="sidebar">
+            <h2>Bot Control Panel</h2>
+            <button class="btn-control" onclick="sendCommand('start')">Start Bot</button>
+            <button class="btn-control" onclick="sendCommand('stop')">Stop Bot</button>
+            <button class="btn-control" onclick="sendCommand('restart')">Restart Bot</button>
+        </div>
+
+        <!-- Main Content -->
+        <div id="main">
+            <div id="chat-box">
+                <div class="message bot">
+                    <strong>Bot:</strong> Hello, I am your bot. Ready for commands!
+                </div>
+            </div>
+            <div id="command-input">
+                <input type="text" id="command" placeholder="Enter bot command...">
+                <button onclick="sendMessage()">Send Command</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to simulate sending a bot command
+        function sendMessage() {
+            const commandInput = document.getElementById('command');
+            const command = commandInput.value.trim();
+            if (command) {
+                addMessage('You', command);
+                sendCommand(command);
+                commandInput.value = '';
+            }
+        }
+
+        // Function to simulate sending a command to the bot
+        function sendCommand(command) {
+            // Simulate a bot response
+            setTimeout(() => {
+                addMessage('Bot', `Command '${command}' received!`);
+            }, 1000);
+        }
+
+        // Function to add messages to the chat
+        function addMessage(sender, message) {
+            const chatBox = document.getElementById('chat-box');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            if (sender === 'Bot') {
+                messageDiv.classList.add('bot');
+            }
+            messageDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
+        }
+    </script>
+</body>
+</html>
