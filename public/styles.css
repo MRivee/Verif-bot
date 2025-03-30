@@ -1,0 +1,121 @@
+:root {
+  --discord-blurple: #5865F2;
+  --discord-green: #57F287;
+  --discord-red: #ED4245;
+  --discord-dark: #2C2F33;
+  --discord-darker: #23272A;
+}
+
+body {
+  font-family: 'Whitney', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: var(--discord-darker);
+  color: white;
+  margin: 0;
+  padding: 20px;
+}
+
+.dashboard {
+  max-width: 1000px;
+  margin: 0 auto;
+  background-color: var(--discord-dark);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.bot-status {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.bot-status.online {
+  background-color: var(--discord-green);
+  color: black;
+}
+
+.bot-status.offline {
+  background-color: var(--discord-red);
+}
+
+.control-panel {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+button {
+  background-color: var(--discord-blurple);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-right: 10px;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #4752C4;
+}
+
+#refreshButton {
+  background-color: #4E5D94;
+}
+
+.logs-container {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.logs {
+  max-height: 500px;
+  overflow-y: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 10px;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+.log-entry {
+  padding: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.log-entry.error {
+  color: #FF6B6B;
+}
+
+.log-entry .timestamp {
+  color: #A5A5A5;
+  margin-right: 10px;
+}
