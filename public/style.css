@@ -1,0 +1,155 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Whitney', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #36393f;
+    color: #dcddde;
+}
+
+.discord-app {
+    display: flex;
+    height: 100vh;
+}
+
+.server-sidebar {
+    width: 72px;
+    background-color: #202225;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 12px;
+}
+
+.server-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #36393f;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-radius 0.2s ease;
+}
+
+.server-icon.active {
+    border-radius: 16px;
+    background-color: #5865f2;
+}
+
+.channel-sidebar {
+    width: 240px;
+    background-color: #2f3136;
+    padding: 12px;
+}
+
+.category {
+    color: #96989d;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.channel {
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #96989d;
+}
+
+.channel.active {
+    background-color: #40444b;
+    color: white;
+}
+
+.chat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #36393f;
+}
+
+.chat-header {
+    padding: 16px;
+    border-bottom: 1px solid #2f3136;
+    font-weight: 600;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.messages-container {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.message {
+    margin-bottom: 16px;
+}
+
+.message-author {
+    font-weight: 500;
+    color: white;
+    margin-right: 8px;
+}
+
+.message-time {
+    color: #72767d;
+    font-size: 12px;
+}
+
+.message-content {
+    margin-top: 4px;
+}
+
+.message-input {
+    padding: 16px;
+    display: flex;
+}
+
+.message-input input {
+    flex: 1;
+    background-color: #40444b;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    color: white;
+    font-size: 16px;
+}
+
+.message-input button {
+    margin-left: 8px;
+    background-color: #5865f2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0 16px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+/* Styles pour la console admin */
+.admin-header {
+    background-color: #202225;
+    padding: 20px;
+    color: white;
+    text-align: center;
+}
+
+.admin-controls {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.admin-controls button {
+    background-color: #5865f2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
