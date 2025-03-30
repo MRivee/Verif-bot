@@ -1,155 +1,76 @@
-body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Whitney', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-color: #36393f;
-    color: #dcddde;
-}
-
-.discord-app {
-    display: flex;
-    height: 100vh;
-}
-
-.server-sidebar {
-    width: 72px;
-    background-color: #202225;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 12px;
-}
-
-.server-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background-color: #36393f;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: border-radius 0.2s ease;
-}
-
-.server-icon.active {
-    border-radius: 16px;
-    background-color: #5865f2;
-}
-
-.channel-sidebar {
-    width: 240px;
-    background-color: #2f3136;
-    padding: 12px;
-}
-
-.category {
-    color: #96989d;
-    font-size: 12px;
-    font-weight: 600;
-    margin-top: 20px;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-}
-
-.channel {
-    padding: 8px;
-    border-radius: 4px;
-    cursor: pointer;
-    color: #96989d;
-}
-
-.channel.active {
-    background-color: #40444b;
-    color: white;
-}
-
-.chat-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    background-color: #36393f;
-}
-
-.chat-header {
-    padding: 16px;
-    border-bottom: 1px solid #2f3136;
-    font-weight: 600;
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
-}
-
-.messages-container {
-    flex: 1;
-    padding: 16px;
-    overflow-y: auto;
-}
-
+/* Styles pour les messages */
 .message {
-    margin-bottom: 16px;
+  margin-bottom: 16px;
+  padding: 8px 16px;
+  background-color: #36393f;
+  border-radius: 8px;
 }
 
-.message-author {
-    font-weight: 500;
-    color: white;
-    margin-right: 8px;
+.message-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
 }
 
-.message-time {
-    color: #72767d;
-    font-size: 12px;
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.username {
+  font-weight: 600;
+  margin-right: 8px;
+  color: #fff;
+}
+
+.timestamp {
+  font-size: 0.75rem;
+  color: #72767d;
 }
 
 .message-content {
-    margin-top: 4px;
+  margin-left: 40px;
+  color: #dcddde;
 }
 
-.message-input {
-    padding: 16px;
-    display: flex;
+/* Bouton OAuth */
+.oauth-button-container {
+  margin-top: 12px;
+  padding: 12px;
+  background-color: #2f3136;
+  border-radius: 8px;
 }
 
-.message-input input {
-    flex: 1;
-    background-color: #40444b;
-    border: none;
-    border-radius: 8px;
-    padding: 12px;
-    color: white;
-    font-size: 16px;
+.oauth-button {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #5865f2;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  margin-top: 8px;
 }
 
-.message-input button {
-    margin-left: 8px;
-    background-color: #5865f2;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 0 16px;
-    cursor: pointer;
-    font-weight: 500;
+.oauth-button:hover {
+  background-color: #4752c4;
 }
 
-/* Styles pour la console admin */
-.admin-header {
-    background-color: #202225;
-    padding: 20px;
-    color: white;
-    text-align: center;
+/* Messages système */
+.system-message {
+  color: #b9bbbe;
+  font-style: italic;
 }
 
-.admin-controls {
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-}
-
-.admin-controls button {
-    background-color: #5865f2;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
+/* Responsive */
+@media (max-width: 768px) {
+  .discord-app {
+    flex-direction: column;
+  }
+  
+  .server-sidebar, .channel-sidebar {
+    width: 100%;
+    flex-direction: row;
+  }
 }
