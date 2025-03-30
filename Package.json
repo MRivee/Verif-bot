@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "functions/verify.js",
   "scripts": {
-    "build": "echo 'Build complet'",
+    "build": "echo 'Build completed'",
     "start": "node functions/verify.js"
   },
   "dependencies": {
