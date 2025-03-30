@@ -1,17 +1,23 @@
 [build]
-  command = "npm install"
+  command = "npm install && npm run build"
   publish = "public"
   functions = "functions"
 
+[build.environment]
+  NODE_VERSION = "18"  # Version LTS stable
+
+[context.production.environment]
+  DISCORD_TOKEN = "@discord_bot_token"
+  DISCORD_CLIENT_SECRET = "@discord_client_secret"
+  REPLIT_URL = "@replit_url"
+
 [[redirects]]
-  from = "/"
+  from = "/*"
   to = "/index.html"
   status = 200
+  force = false
 
 [[redirects]]
   from = "/admin"
   to = "/admin.html"
   status = 200
-
-[dev]
-  framework = "#static"
